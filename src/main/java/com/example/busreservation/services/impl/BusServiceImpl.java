@@ -10,10 +10,8 @@ import java.util.List;
 
 @Service
 public class BusServiceImpl implements BusService {
-
     @Autowired
     private BusRepository busRepository;
-
     @Override
     public Bus addBus(Bus bus) {
         return busRepository.save(bus);
@@ -24,3 +22,4 @@ public class BusServiceImpl implements BusService {
         return busRepository.findAll();
     }
 }
+
