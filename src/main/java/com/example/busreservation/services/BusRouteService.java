@@ -8,4 +8,8 @@ public interface BusRouteService {
     BusRoute addBusRoute(BusRoute busRoute);
 
     List<BusRoute> getAllBusRoute();
+
+    BusRoute getRouteByRouteName(String routeName);
+
+    BusRoute getRouteByCityFromAndCityTo(String cityFrom, String cityTo);
 }

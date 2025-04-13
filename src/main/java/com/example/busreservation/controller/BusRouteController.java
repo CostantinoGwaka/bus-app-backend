@@ -27,4 +27,14 @@ public class BusRouteController {
     public ResponseEntity<List<BusRoute>> getAllBusRoute(){
         return ResponseEntity.ok(busRouteService.getAllBusRoute());
     }
+
+    @GetMapping("/{routeName}")
+    public ResponseEntity<BusRoute> getRouteByRouteName(@PathVariable (name = "routeName") String routeName){
+        return ResponseEntity.ok(busRouteService.getRouteByRouteName(routeName));
+    }
+
+    @GetMapping("/query")
+    public ResponseEntity<BusRoute> getRouteByCityFromAndCityTo(@RequestParam String cityFrom, @RequestParam String cityTo){
+        return ResponseEntity.ok(busRouteService.getRouteByCityFromAndCityTo(cityFrom,cityTo));
+    }
 }
