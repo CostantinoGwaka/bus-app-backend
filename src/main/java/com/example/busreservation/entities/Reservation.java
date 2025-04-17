@@ -15,14 +15,16 @@ import lombok.Setter;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String reservationId;
+    @Column(name = "reservation_id")
+    private Long reservationId;
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Customer customer;
 
+
     @OneToOne
-    @JoinColumn(name = "bus_schedule_id")
+    @JoinColumn(name = "bus_schedule_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private BusSchedule busSchedule;
 
     private Long timestamp;

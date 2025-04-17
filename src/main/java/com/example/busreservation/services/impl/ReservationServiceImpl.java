@@ -1,14 +1,20 @@
 package com.example.busreservation.services.impl;
 
+import com.example.busreservation.entities.BusSchedule;
+import com.example.busreservation.entities.Customer;
 import com.example.busreservation.entities.Reservation;
+import com.example.busreservation.models.ReservationApiException;
 import com.example.busreservation.repository.BusScheduleRepository;
 import com.example.busreservation.repository.CustomerRepository;
 import com.example.busreservation.repository.ReservationRepository;
 import com.example.busreservation.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
@@ -35,17 +41,19 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> getAllReservation() {
+    public List<Reservation> getAllReservation(){
         return reservationRepository.findAll();
     }
 
     @Override
-    public List<Reservation> getReservationsByMobile(String mobile) {
-        return reservationRepository.findby;
+    public List<Reservation> getReservationByScheduleAndDepartureDate(Long scheduleId, String departureDate) {
+        final BusSchedule schedule=busScheduleRepository.findById(scheduleId).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST,"Schedule not found"));
+        return reservationRepository.findByBusScheduleAndDepartureDate(schedule,departureDate).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST,"Reservation not found"));
     }
 
     @Override
-    public List<Reservation> getReservationByScheduleAndDepartureDate(Long scheduleId, String departureDate) {
-        return null;
+    public List<Reservation> getReservationsByMobile(String mobile) {
+        final Customer customer=customerRepository.findByMobile(mobile).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST,"No record found"));
+        return reservationRepository.findByCustomer(customer).orElseThrow(() -> new ReservationApiException(HttpStatus.BAD_REQUEST,"Reservation not found"));
     }
 }
