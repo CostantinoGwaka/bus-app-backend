@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/api/bus/add",
+                                "api/stand/add",
                                 "api/schedule/add",
                                 "api/route/add")
                         .authenticated()
